@@ -6,4 +6,13 @@ terraform {
     }
   }
   backend "gcs" {}
-}  
+}
+
+module network {
+  source = "./modules/network"
+}
+
+module firewall {
+  source = "./modules/firewall"
+  vpc_network_id = module.network.vpc_network_id
+}
