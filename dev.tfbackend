@@ -1,0 +1,2 @@
+bucket =  "terraform-state-fred"
+prefix = "terraform/gkc-state"
