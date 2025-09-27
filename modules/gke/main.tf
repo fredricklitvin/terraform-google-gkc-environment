@@ -16,10 +16,14 @@ resource "google_container_cluster" "default" {
   deletion_protection = false
   private_cluster_config {
     enable_private_nodes    = true
-    enable_private_endpoint = true 
+    enable_private_endpoint = false 
     master_ipv4_cidr_block  = "10.5.10.0/28"
   }
   master_authorized_networks_config {
+    cidr_blocks {
+      display_name = "my-workstation"
+      cidr_block   = "83.130.132.85/32"   # use curl -4 ifconfig.me to get it
+    }
   }
   node_config {
     service_account = google_service_account.gke_node_sa.email
@@ -56,3 +60,5 @@ resource "google_container_cluster" "default" {
 #     ]
 #   }
 # }
+
+
