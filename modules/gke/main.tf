@@ -17,7 +17,9 @@ resource "google_container_cluster" "default" {
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = true 
-    master_ipv4_cidr_block  = "10.1.10.0/28"
+    master_ipv4_cidr_block  = "10.5.10.0/28"
+  }
+  master_authorized_networks_config {
   }
   node_config {
     service_account = google_service_account.gke_node_sa.email
@@ -33,22 +35,24 @@ resource "google_container_cluster" "default" {
     cluster_secondary_range_name  = var.secondary_ip_range_0
   }
   initial_node_count = "1"
-  remove_default_node_pool = true
+  
 }
 
-resource "google_container_node_pool" "gke_node_pool" {
-  name       = "gke-node-pool"
-  location   = var.region
-  cluster    = google_container_cluster.default.name
-  node_count = var.node_count
+# resource "google_container_node_pool" "gke_node_pool" {
+#   name       = "gke-node-pool"
+#   location   = var.region
+#   cluster    = google_container_cluster.default.name
+#   node_count = var.node_count
 
-  node_config {
-    preemptible  = true
-    machine_type = "e2-medium"
+#   node_config {
+#     preemptible  = true
+#     machine_type = "e2-medium"
+#     disk_type    = "pd-standard"
+#     disk_size_gb = 10
 
-    service_account = google_service_account.gke_node_sa.email
-    oauth_scopes    = [
-      "https://www.googleapis.com/auth/cloud-platform"
-    ]
-  }
-}
+#     service_account = google_service_account.gke_node_sa.email
+#     oauth_scopes    = [
+#       "https://www.googleapis.com/auth/cloud-platform"
+#     ]
+#   }
+# }
