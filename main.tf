@@ -1,4 +1,5 @@
 
+
 module network {
   source = "./modules/network"
 }
@@ -22,4 +23,13 @@ module "gke" {
   secondary_ip_range_1 = module.network.private_subnet_ip_range_1
   secondary_ip_range_0 = module.network.private_subnet_ip_range_0
   region = var.region
+}
+
+module "helm" {
+  source = "./modules/helm"
+  depends_on = [module.gke]
+  providers = {
+    kubernetes = kubernetes
+    helm       = helm 
+  }
 }

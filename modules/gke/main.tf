@@ -22,7 +22,7 @@ resource "google_container_cluster" "default" {
   master_authorized_networks_config {
     cidr_blocks {
       display_name = "my-workstation"
-      cidr_block   = "83.130.132.85/32"   # use curl -4 ifconfig.me to get it
+      cidr_block   = "83.230.143.239/32"   # use curl -4 ifconfig.me to get it
     }
   }
   node_config {
