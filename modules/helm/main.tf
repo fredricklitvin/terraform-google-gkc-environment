@@ -1,4 +1,9 @@
-
+terraform {
+  required_providers {
+    helm        = { source = "hashicorp/helm" }
+    kubernetes  = { source = "hashicorp/kubernetes" }
+  }
+}
 resource "helm_release" "argocd" {
   provider = helm 
   name             = "argocd"

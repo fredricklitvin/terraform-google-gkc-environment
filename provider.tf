@@ -26,20 +26,29 @@ provider "google" {
 }
 
 
-data "google_client_config" "provider" {}
+data "google_container_cluster" "this" {
+  name       = "k8s"
+  location   = var.region
+  depends_on = [module.gke]  # ensure cluster exists first
+}
+
+data "google_client_config" "me" {}
 
 
 provider "kubernetes" {
-  host                   = "https://${module.gke.cluster_endpoint}"
-  token                  = data.google_client_config.provider.access_token
-  cluster_ca_certificate = base64decode(module.gke.cluster_ca_certificate)
+  host                   = "https://${data.google_container_cluster.this.endpoint}"
+  token                  = data.google_client_config.me.access_token
+  cluster_ca_certificate = base64decode(
+    data.google_container_cluster.this.master_auth[0].cluster_ca_certificate
+  )
 }
 
-
 provider "helm" {
-  kubernetes {
-    host                   = "https://${module.gke.cluster_endpoint}"
-    token                  = data.google_client_config.provider.access_token
-    cluster_ca_certificate = base64decode(module.gke.cluster_ca_certificate)
+  kubernetes = {
+    host                   = "https://${data.google_container_cluster.this.endpoint}"
+    token                  = data.google_client_config.me.access_token
+    cluster_ca_certificate = base64decode(
+      data.google_container_cluster.this.master_auth[0].cluster_ca_certificate
+    )
   }
 }

@@ -28,8 +28,6 @@ module "gke" {
 module "helm" {
   source = "./modules/helm"
   depends_on = [module.gke]
-  providers = {
-    kubernetes = kubernetes
-    helm       = helm 
-  }
+  providers  = { helm = helm, kubernetes = kubernetes }
+
 }
