@@ -29,7 +29,7 @@ provider "google" {
 data "google_container_cluster" "this" {
   name       = "k8s"
   location   = var.region
-  depends_on = [module.gke]  # ensure cluster exists first
+  depends_on = [module.gke] 
 }
 
 data "google_client_config" "me" {}

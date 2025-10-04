@@ -17,12 +17,12 @@ resource "google_container_cluster" "default" {
   private_cluster_config {
     enable_private_nodes    = true
     enable_private_endpoint = false 
-    master_ipv4_cidr_block  = "10.5.10.0/28"
+    master_ipv4_cidr_block  = var.private_master_ipv4
   }
   master_authorized_networks_config {
     cidr_blocks {
       display_name = "my-workstation"
-      cidr_block   = "83.230.143.239/32"   # use curl -4 ifconfig.me to get it
+      cidr_block   = var.master_authorized_cidr_block   # use curl -4 ifconfig.me to get it
     }
   }
   node_config {
@@ -38,7 +38,7 @@ resource "google_container_cluster" "default" {
     services_secondary_range_name = var.secondary_ip_range_1
     cluster_secondary_range_name  = var.secondary_ip_range_0
   }
-  initial_node_count = "1"
+  initial_node_count = var.node_count
   
 }
 

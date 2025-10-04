@@ -59,3 +59,21 @@ variable "node_count" {
   type        = number
   default     = 1
 }
+
+variable private_master_ipv4 {
+  type        = string
+  default     = "10.5.10.0/28"
+  description = "The IP range for the private master IPv4 address."
+}
+
+variable master_authorized_cidr_block {
+  type        = string
+  default     = "147.235.211.201/32"
+  description = "The CIDR block to authorize for master access."
+}
+
+variable initial_node_count {
+  type        = string
+  default     = "1"
+  description = "The initial number of nodes in the cluster."
+}
