@@ -32,4 +32,7 @@ module "helm" {
   depends_on = [module.gke]
 
 }
-
+module "artifact" {
+  source = "./modules/artifact"
+  region = var.region
+}
