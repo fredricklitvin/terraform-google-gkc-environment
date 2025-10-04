@@ -1,5 +1,7 @@
-
-
+module "service" {
+  source = "./modules/services"
+  project = "i-agility-465314-p6"
+  }
 module network {
   source = "./modules/network"
 }
@@ -28,7 +30,6 @@ module "gke" {
 module "helm" {
   source = "./modules/helm"
   depends_on = [module.gke]
-  # providers  = { helm = helm, kubernetes = kubernetes }
 
 }
 

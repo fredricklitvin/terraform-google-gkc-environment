@@ -1,4 +1,4 @@
-output "argocd_server_host" {
+output "argocd_server_ip" {
   description = "Argo CD endpoint ip address."
-  value       = module.helm.argocd_server_ip
+  value       = "http://${module.helm.argocd_server_ip}:80"
 }
