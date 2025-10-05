@@ -3,7 +3,7 @@ data "kubernetes_service" "argocd_server" {
     name      = "argocd-server" 
     namespace = helm_release.argocd.namespace
   }
-  depends_on = [helm_release.argocd]
+    depends_on             = [helm_release.argocd]
 }
 
 output "argocd_server_ip" {
